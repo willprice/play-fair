@@ -1,2 +1,3 @@
-# play-fair
-Shapley values for assessing the importance of each frame in a video
+# Play Fair: Frame Attributions in Video Models
+
+Placeholder repository.
