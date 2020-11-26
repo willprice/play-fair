@@ -99,7 +99,8 @@ class ShapleyValueResults:
         return self._results["scores"]
 
     @property
-    def max_n_frames(self) -> int: return len(self._results["scores"])
+    def max_n_frames(self) -> int:
+        return len(self._results["scores"])
 
     @cached_property
     def available_classes(self) -> List[int]:
@@ -142,12 +143,17 @@ def get_triggered_props():
 
 class Visualisation:
     def __init__(
-        self, results: ShapleyValueResults, class2str: Dict[int, str], dataset_dir: Path
+        self,
+        results: ShapleyValueResults,
+        class2str: Dict[int, str],
+        dataset_dir: Path,
+        title: str = "ESV Dashboard",
     ):
         self.results = results
         self.class2str = class2str
         self.str2class = {v: k for k, v in class2str.items()}
         self.dataset_dir = dataset_dir
+        self.title = title
 
         def decode_other_classes(classes_str):
             return list(map(int, classes_str.split(":")))
@@ -391,11 +397,7 @@ class Visualisation:
         example_idx = available_example_idxs.index(idx)
         return html.Div(
             [
-                html.Div(
-                    html.H1(
-                        "ESV Dashboard - Something Something v2 - Multiscale TRN",
-                    )
-                ),
+                html.Div(html.H1(self.title)),
                 html.Div(
                     [
                         html.Div(
@@ -501,6 +503,11 @@ class Visualisation:
                     ],
                     id="video-pane",
                 ),
+                html.A(
+                    target="_blank",
+                    href="https://www.youtube.com/watch?v=zoUJi6L6z0M&feature=youtu.be",
+                    children=html.Div(id="help-btn", children=html.Div("?")),
+                ),
                 html.Div(
                     id="state-uid",
                     children=self.default_state["uid"],
@@ -590,8 +597,17 @@ dataset_dir: Path = args.dataset_root
 classes = pd.read_csv(args.classes_csv, index_col="name")["id"]
 class2str = {class_id: name for name, class_id in classes.items()}
 
-results = ShapleyValueResults(pd.read_pickle(args.esvs_pkl))
-visualisation = Visualisation(results, class2str, dataset_dir)
+results_dict = pd.read_pickle(args.esvs_pkl)
+result_attributes = results_dict.get("attrs", {})
+
+title = "ESV Dashboard"
+if "dataset" in result_attributes:
+    title += f" - {result_attributes['dataset']}"
+if "model" in result_attributes:
+    title += f" - {result_attributes['model']}"
+
+results = ShapleyValueResults(results_dict)
+visualisation = Visualisation(results, class2str, dataset_dir, title=title)
 
 app = Dash(
     __name__,
@@ -602,9 +618,7 @@ app = Dash(
 visualisation.attach_to_app(app)
 
 if __name__ == "__main__":
-    app.run_server(
-        host=args.host, debug=args.debug, port=args.port
-    )
+    app.run_server(host=args.host, debug=args.debug, port=args.port)
 else:
     print("Running in wsgi mode")
     application = app.server

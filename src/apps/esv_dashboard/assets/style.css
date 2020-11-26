@@ -1,3 +1,25 @@
+h1 {
+    text-align: center;
+}
+
+#help-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    height: 47px;
+    width: 47px;
+    justify-content: center;
+    display: flex;
+    border-radius: 40px;
+    background-color: #119dff;
+    color: white;
+    font-weight: bold;
+    font-size: 2em;
+    cursor: pointer;
+}
+#help-btn:hover {
+    background-color: #108de4;
+}
 #visualisation {
     margin: 2vw;
     max-width: 1440px;
@@ -77,6 +99,9 @@
 }
 
 @media only screen and (min-width: 1440px) {
+    h1 {
+        text-align: left;
+    }
     #esv-scatter-container {
         min-width: 200px;
         padding-right: 0;
