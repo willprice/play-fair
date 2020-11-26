@@ -1,0 +1,84 @@
+#visualisation {
+    margin: 2vw;
+    max-width: 1440px;
+}
+.controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+.controls .control-element {
+    min-width: 450px;
+    width: 100%;
+}
+
+#graph-pane {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#model-preds-bar-container {
+    min-width: 200px;
+    flex-grow: 1;
+}
+#esv-scatter-container {
+    min-width: 200px;
+    padding-right: 20px;
+    flex-grow: 2;
+}
+
+#video-pane {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#video-pane > div {
+    flex-basis: min(49vw, 240px);
+    flex-shrink: 0;
+    flex-grow: 1;
+}
+
+#current-frame-container img {
+    max-width: 96%;
+    margin: min(10px, 2%);
+}
+#video-container video {
+    max-width: 96%;
+    margin: min(10px, 2%);
+}
+
+@media only screen and (min-width: 720px) {
+    #visualisation {
+        margin: 0 auto;
+    }
+
+    .controls {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .controls .control-element {
+        flex-grow: 1;
+        margin: 0 1em;
+    }
+    .controls label {
+        font-weight: bold;
+    }
+
+    #graph-pane {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+
+}
+
+@media only screen and (min-width: 1440px) {
+    #esv-scatter-container {
+        min-width: 200px;
+        padding-right: 0;
+    }
+}
