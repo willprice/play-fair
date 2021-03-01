@@ -34,7 +34,7 @@ Read through the sections on how to add new datasets and models.
 ## Environment
 
 ```bash
-$ conda env create -n play-fair -f environment.yaml
+$ conda env create -n play-fair -f environment.yml
 ```
 
 You will also need to install a version of ffmpeg with vp9 support, we suggest using the
